@@ -1,5 +1,5 @@
 # include <stdio.h>
-# include <strings.h>
+# include <string.h>
 # include "am.h"
 # include "aminternals.h"
 # include "pf.h"

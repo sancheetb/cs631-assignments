@@ -25,13 +25,35 @@ in codec.c to convert strings into compact binary representations
  */
 int
 encode(Schema *sch, char **fields, byte *record, int spaceLeft) {
-    UNIMPLEMENTED;
-    // for each field
-    //    switch corresponding schema type is
-    //        VARCHAR : EncodeCString
-    //        INT : EncodeInt
-    //        LONG: EncodeLong
-    // return the total number of bytes encoded into record
+    byte *cursor = record;
+    int total = 0;
+
+    for (int i = 0; i < sch->numColumns; i++) {
+        int nbytes = 0;
+
+        switch (sch->columns[i]->type) {
+        case VARCHAR:
+            nbytes = EncodeCString(fields[i], cursor, spaceLeft - total);
+            break;
+
+        case INT:
+            nbytes = EncodeInt(atoi(fields[i]), cursor);
+            break;
+
+        case LONG:
+            nbytes = EncodeLong(atoll(fields[i]), cursor);
+            break;
+
+        default:
+            fprintf(stderr, "Unknown type\n");
+            exit(EXIT_FAILURE);
+        }
+
+        cursor += nbytes;
+        total += nbytes;
+    }
+
+    return total;
 }
 
 Schema *
@@ -54,7 +76,23 @@ loadCSV() {
     Schema *sch = parseSchema(line);
     Table *tbl;
 
-    UNIMPLEMENTED;
+    int err;
+
+    err = Table_Open(DB_NAME, sch, TRUE, &tbl);
+    checkerr(err);
+
+    err = AM_CreateIndex(DB_NAME,
+                        0,
+                        'i',
+                        sizeof(int));
+
+    if (err != AME_OK) {
+        AM_PrintError("AM_CreateIndex");
+        exit(1);
+    }
+
+    int indexFD = PF_OpenFile(INDEX_NAME);
+    checkerr(indexFD);
 
     char *tokens[MAX_TOKENS];
     char record[MAX_PAGE_SIZE];
@@ -65,14 +103,19 @@ loadCSV() {
 	int len = encode(sch, tokens, record, sizeof(record));
 	RecId rid;
 
-	UNIMPLEMENTED;
+	err = Table_Insert(tbl, (byte *)record, len, &rid);
+    checkerr(err);
 
 	printf("%d %s\n", rid, tokens[0]);
 
 	// Indexing on the population column 
 	int population = atoi(tokens[2]);
 
-	UNIMPLEMENTED;
+	err = AM_InsertEntry(indexFD,
+                     'i',
+                     sizeof(int),
+                     (char *)&population,
+                     rid);
 	// Use the population field as the field to index on
 	    
 	checkerr(err);

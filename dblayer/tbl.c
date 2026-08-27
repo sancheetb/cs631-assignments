@@ -1,4 +1,5 @@
 
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -16,101 +17,99 @@ void setNumSlots(byte *pageBuf, int nslots);
 int  getNthSlotOffset(int slot, char* pageBuf);
 
 
+
+
 /**
    Opens a paged file, creating one if it doesn't exist, and optionally
    overwriting it.
    Returns 0 on success and a negative error code otherwise.
    If successful, it returns an initialized Table*.
  */
-
-   int
+int
 Table_Open(char *dbname, Schema *schema, bool overwrite, Table **ptable)
 {
+    // Initialize PF, create PF file,
+    // allocate Table structure  and initialize and return via ptable
+    // The Table structure only stores the schema. The current functionality
+    // does not really need the schema, because we are only concentrating
+    // on record storage. 
+
     PF_Init();
 
-    if (overwrite) {
+    if(overwrite){
         PF_DestroyFile(dbname);
         PF_CreateFile(dbname);
     }
 
     int fd = PF_OpenFile(dbname);
-    if (fd < 0)
-        return fd;
 
-    Table *tbl = malloc(sizeof(Table));
+    if(fd < 0) return fd;
 
-    tbl->schema = schema;
-    tbl->fd = fd;
+    Table *table = malloc(sizeof(Table));
+    table->schema = schema;
+    table->fd = fd;
 
-    *ptable = tbl;
-
+    *ptable = table;
     return 0;
 }
 
 void
-Table_Close(Table *tbl)
-{
+Table_Close(Table *tbl) {
+    // Unfix any dirty pages, close file.
     PF_CloseFile(tbl->fd);
     free(tbl);
 }
 
+
 int
-Table_Insert(Table *tbl, byte *record, int len, RecId *rid)
-{
-    int pageNum = -1;
-    char *pageBuf = NULL;
-    int err;
+Table_Insert(Table *tbl, byte *record, int len, RecId *rid) {
+    // Allocate a fresh page if len is not enough for remaining space
+    // Get the next free slot on page, and copy record in the free
+    // space
+    // Update slot and free space index information on top of page.
 
-    int required = len + 2 + 2;   // record len + slot entry
+    int pg_num = -1; 
+    byte *pg_buffer = NULL;
 
-    err = PF_GetFirstPage(tbl->fd, &pageNum, &pageBuf);
+    int length_size = 2, offset_size = 2;
+    int req = length_size + offset_size + len;
 
-    while (err == PFE_OK) {
+    int err = PF_GetFirstPage(tbl->fd, &pg_num, &pg_buffer);
 
-        short freePtr = DecodeShort(pageBuf);
-        short nslots  = DecodeShort(pageBuf + 2);
+    while(err == PFE_OK) {
+        short free_ptr = DecodeShort(pg_buffer);
+        short nslots = DecodeShort(pg_buffer + 2);
 
-        int headerEnd = 4 + 2 * nslots;
-        int freeSpace = freePtr - headerEnd;
+        int block_end = 4 + 2*nslots;
+        int free_space = free_ptr - block_end;
 
-        if (freeSpace >= required)
-            break;
+        if(free_space >= req) break;
 
-        PF_UnfixPage(tbl->fd, pageNum, FALSE);
-        err = PF_GetNextPage(tbl->fd, &pageNum, &pageBuf);
+        PF_UnfixPage(tbl->fd, pg_num, FALSE);
+        err = PF_GetNextPage(tbl->fd, &pg_num, &pg_buffer);
     }
 
-    if (err == PFE_EOF) {
-
-        err = PF_AllocPage(tbl->fd, &pageNum, &pageBuf);
-        if (err < 0)
-            return err;
-
-        EncodeShort(PF_PAGE_SIZE, pageBuf);
-        EncodeShort(0, pageBuf + 2);
+    if(err == PFE_EOF) {
+        err = PF_AllocPage(tbl->fd, &pg_num, &pg_buffer);
+        if(err < 0) return err;
+        EncodeShort(PF_PAGE_SIZE, pg_buffer);
+        EncodeShort(0, pg_buffer + 2);
     }
+    
+    short free_ptr = DecodeShort(pg_buffer);
+    short nslots = DecodeShort(pg_buffer + 2);
+    short offset = free_ptr - (len + 2);
+    
+    EncodeShort(len, pg_buffer+offset);
+    memcpy(pg_buffer+offset+2, record, len);
 
-    short freePtr = DecodeShort(pageBuf);
-    short nslots  = DecodeShort(pageBuf + 2);
+    EncodeShort(offset, pg_buffer+ 4 + 2*nslots);
+    EncodeShort(nslots+1, pg_buffer + 2);
+    EncodeShort(offset, pg_buffer);
 
-    short newOffset = freePtr - (len + 2);
+    *rid = (pg_num << 16) | nslots;
 
-    EncodeShort(len, pageBuf + newOffset);
-    memcpy(pageBuf + newOffset + 2, record, len);
-
-    EncodeShort(newOffset,
-                pageBuf + 4 + 2 * nslots);
-
-    EncodeShort(nslots + 1,
-                pageBuf + 2);
-
-    EncodeShort(newOffset,
-                pageBuf);
-
-    *rid = (pageNum << 16) | nslots;
-
-    PF_UnfixPage(tbl->fd, pageNum, TRUE);
-
+    PF_UnfixPage(tbl->fd, pg_num, TRUE);
     return 0;
 }
 
@@ -121,124 +120,54 @@ Table_Insert(Table *tbl, byte *record, int len, RecId *rid)
   Returns the number of bytes copied.
  */
 int
-Table_Get(Table *tbl, RecId rid, byte *record, int maxlen)
-{
+Table_Get(Table *tbl, RecId rid, byte *record, int maxlen) {
     int slot = rid & 0xFFFF;
     int pageNum = rid >> 16;
 
-    char *pageBuf;
-    int err;
+    // PF_GetThisPage(pageNum)
+    // In the page get the slot offset of the record, and
+    // memcpy bytes into the record supplied.
+    // Unfix the page
 
-    err = PF_GetThisPage(tbl->fd,
-                         pageNum,
-                         &pageBuf);
+    byte *pg_buffer;
+    int err = PF_GetThisPage(tbl->fd, pageNum, &pg_buffer);
+    if(err < 0) return err;
 
-    if (err < 0)
-        return err;
+    short offset = DecodeShort(pg_buffer + 4 + 2*slot);
+    short len = DecodeShort(pg_buffer + offset);
 
-    short offset =
-        DecodeShort(pageBuf + 4 + 2 * slot);
+    if(len > maxlen) len = maxlen;
+    memcpy(record, pg_buffer + offset + 2, len);
 
-    short len =
-        DecodeShort(pageBuf + offset);
+    PF_UnfixPage(tbl->fd, pageNum, FALSE);
 
-    if (len > maxlen)
-        len = maxlen;
-
-    memcpy(record,
-           pageBuf + offset + 2,
-           len);
-
-    PF_UnfixPage(tbl->fd,
-                 pageNum,
-                 FALSE);
-
-    return len;
+    return len; // return size of record
 }
 
 void
-Table_Scan(Table *tbl, void *callbackObj, ReadFunc callbackfn)
-{
-    int pageNum;
-    char *pageBuf;
+Table_Scan(Table *tbl, void *callbackObj, ReadFunc callbackfn) {
 
-    int err =
-        PF_GetFirstPage(tbl->fd,
-                        &pageNum,
-                        &pageBuf);
+    // For each page obtained using PF_GetFirstPage and PF_GetNextPage
+    //    for each record in that page,
+    //          callbackfn(callbackObj, rid, record, recordLen)
 
-    while (err == PFE_OK) {
+    int pg_num;
+    byte *pg_buffer;
+    int err = PF_GetFirstPage(tbl->fd, &pg_num, &pg_buffer);
 
-        short nslots =
-            DecodeShort(pageBuf + 2);
-
-        for (int slot = 0;
-             slot < nslots;
-             slot++) {
-
-            short offset =
-                DecodeShort(pageBuf + 4 + 2 * slot);
-
-            short len =
-                DecodeShort(pageBuf + offset);
-
-            RecId rid =
-                (pageNum << 16) | slot;
-
-            callbackfn(callbackObj,
-                       rid,
-                       (byte *)(pageBuf + offset + 2),
-                       len);
+    while(err == PFE_OK){
+        short nslots = DecodeShort(pg_buffer+2);
+        
+        for(int i=0; i<nslots; i++){
+            short offset = DecodeShort(pg_buffer + 4 + 2*i);
+            short len = DecodeShort(pg_buffer + offset);
+            RecId rid = (pg_num << 16) | i;
+            callbackfn(callbackObj, rid, (byte*)(pg_buffer + offset + 2), len);
         }
 
-        PF_UnfixPage(tbl->fd,
-                     pageNum,
-                     FALSE);
-
-        err =
-            PF_GetNextPage(tbl->fd,
-                           &pageNum,
-                           &pageBuf);
+        PF_UnfixPage(tbl->fd, pg_num, FALSE);
+        err = PF_GetNextPage(tbl->fd, &pg_num, &pg_buffer);
     }
 }
 
 
-short getFreePtr(byte *page)
-{
-    return DecodeShort(page);
-}
-
-void setFreePtr(byte *page, short ptr)
-{
-    EncodeShort(ptr, page);
-}
-
-int getNumSlots(byte *page)
-{
-    return DecodeShort(page + SLOT_COUNT_OFFSET);
-}
-
-void setNumSlots(byte *page, int nslots)
-{
-    EncodeShort((short)nslots,
-                page + SLOT_COUNT_OFFSET);
-}
-
-int getNthSlotOffset(int slot, char *page)
-{
-    return DecodeShort(page + 4 + 2*slot);
-}
-
-void setNthSlotOffset(int slot,
-                      short offset,
-                      char *page)
-{
-    EncodeShort(offset,
-                page + 4 + 2*slot);
-}
-
-int getLen(int slot, byte *page)
-{
-    int off = getNthSlotOffset(slot, page);
-    return DecodeShort(page + off);
-}

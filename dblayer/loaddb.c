@@ -81,10 +81,7 @@ loadCSV() {
     err = Table_Open(DB_NAME, sch, TRUE, &tbl);
     checkerr(err);
 
-    err = AM_CreateIndex(DB_NAME,
-                        0,
-                        'i',
-                        sizeof(int));
+    err = AM_CreateIndex(DB_NAME, 0, 'i', sizeof(int));
 
     if (err != AME_OK) {
         AM_PrintError("AM_CreateIndex");

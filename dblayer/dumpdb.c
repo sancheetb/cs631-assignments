@@ -22,9 +22,7 @@ printRow(void *callbackObj, RecId rid, byte *row, int len) {
 
         case VARCHAR: {
             char buf[256];
-            int slen = DecodeCString(cursor,
-                                     buf,
-                                     sizeof(buf));
+            int slen = DecodeCString(cursor, buf, sizeof(buf));
 
             printf("%s", buf);
             cursor += slen + sizeof(short);
@@ -59,12 +57,7 @@ printRow(void *callbackObj, RecId rid, byte *row, int len) {
 void
 index_scan(Table *tbl, Schema *schema, int indexFD, int op, int value) {
 
-    int scanDesc =
-        AM_OpenIndexScan(indexFD,
-                         'i',
-                         sizeof(int),
-                         op,
-                         (char *)&value);
+    int scanDesc = AM_OpenIndexScan(indexFD, 'i', sizeof(int), op, (char *)&value);
 
     if (scanDesc < 0) {
         AM_PrintError("AM_OpenIndexScan");
@@ -80,15 +73,9 @@ index_scan(Table *tbl, Schema *schema, int indexFD, int op, int value) {
 
         byte record[4000];
 
-        int len = Table_Get(tbl,
-                            rid,
-                            record,
-                            sizeof(record));
+        int len = Table_Get(tbl, rid, record, sizeof(record));
 
-        printRow(schema,
-                 rid,
-                 record,
-                 len);
+        printRow(schema, rid, record, len);
     }
 
     AM_CloseIndexScan(scanDesc);
@@ -100,16 +87,11 @@ main(int argc, char **argv) {
     Schema *schema = parseSchema(schemaTxt);
     Table *tbl;
 
-    int err = Table_Open(DB_NAME,
-                     schema,
-                     false,
-                     &tbl);
+    int err = Table_Open(DB_NAME, schema, false, &tbl);
 
     checkerr(err);
     if (argc == 2 && *(argv[1]) == 's') {
-	Table_Scan(tbl,
-           schema,
-           printRow);
+	Table_Scan(tbl, schema, printRow);
 	// invoke Table_Scan with printRow, which will be invoked for each row in the table.
     } else {
 	// index scan by default

@@ -1,0 +1,219 @@
+2026-09-01 15:52:26.323 IST [30043] LOG:  starting PostgreSQL 18.6 on x86_64-pc-linux-gnu, compiled by gcc (GCC) 15.2.1 20260123 (Red Hat 15.2.1-7), 64-bit
+2026-09-01 15:52:26.324 IST [30043] LOG:  listening on IPv6 address "::1", port 5432
+2026-09-01 15:52:26.324 IST [30043] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2026-09-01 15:52:26.327 IST [30043] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2026-09-01 15:52:26.335 IST [30049] LOG:  database system was shut down at 2026-09-01 15:50:47 IST
+2026-09-01 15:52:26.340 IST [30043] LOG:  database system is ready to accept connections
+2026-09-01 15:55:16.431 IST [30043] LOG:  received fast shutdown request
+2026-09-01 15:55:16.436 IST [30043] LOG:  aborting any active transactions
+2026-09-01 15:55:16.436 IST [30043] LOG:  background worker "logical replication launcher" (PID 30052) exited with exit code 1
+2026-09-01 15:55:16.436 IST [30047] LOG:  shutting down
+2026-09-01 15:55:16.440 IST [30047] LOG:  checkpoint starting: shutdown immediate
+2026-09-01 15:55:17.389 IST [30047] LOG:  checkpoint complete: wrote 992 buffers (6.1%), wrote 3 SLRU buffers; 0 WAL file(s) added, 0 removed, 0 recycled; write=0.029 s, sync=0.905 s, total=0.953 s; sync files=312, longest=0.006 s, average=0.003 s; distance=4713 kB, estimate=4713 kB; lsn=0/1BE75A8, redo lsn=0/1BE75A8
+2026-09-01 15:55:17.401 IST [30043] LOG:  database system is shut down
+2026-10-06 13:01:46.967 IST [7025] LOG:  starting PostgreSQL 18.6 on x86_64-pc-linux-gnu, compiled by gcc (GCC) 15.2.1 20260123 (Red Hat 15.2.1-7), 64-bit
+2026-10-06 13:01:46.968 IST [7025] LOG:  listening on IPv6 address "::1", port 5432
+2026-10-06 13:01:46.968 IST [7025] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2026-10-06 13:01:46.971 IST [7025] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2026-10-06 13:01:46.982 IST [7031] LOG:  database system was shut down at 2026-09-01 21:55:11 IST
+2026-10-06 13:01:46.989 IST [7025] LOG:  database system is ready to accept connections
+2026-10-06 13:06:47.052 IST [7029] LOG:  checkpoint starting: time
+2026-10-06 13:06:47.151 IST [7029] LOG:  checkpoint complete: wrote 0 buffers (0.0%), wrote 3 SLRU buffers; 0 WAL file(s) added, 0 removed, 0 recycled; write=0.001 s, sync=0.007 s, total=0.099 s; sync files=2, longest=0.004 s, average=0.004 s; distance=0 kB, estimate=0 kB; lsn=0/3474970, redo lsn=0/3474918
+2026-10-06 13:11:47.221 IST [7029] LOG:  checkpoint starting: time
+2026-10-06 13:13:28.354 IST [7029] LOG:  checkpoint complete: wrote 1005 buffers (6.1%), wrote 1 SLRU buffers; 0 WAL file(s) added, 0 removed, 0 recycled; write=100.813 s, sync=0.303 s, total=101.133 s; sync files=353, longest=0.006 s, average=0.001 s; distance=4620 kB, estimate=4620 kB; lsn=0/38F7A50, redo lsn=0/38F79C0
+2026-10-06 13:14:32.379 IST [7470] ERROR:  syntax error at or near "ROLLBACK" at character 8
+2026-10-06 13:14:32.379 IST [7470] STATEMENT:  COMMIT
+	ROLLBACK
+	COMMIT;
+2026-10-06 13:14:39.405 IST [7470] WARNING:  there is no transaction in progress
+2026-10-06 13:26:47.574 IST [7029] LOG:  checkpoint starting: time
+2026-10-06 13:26:48.180 IST [7029] LOG:  checkpoint complete: wrote 5 buffers (0.0%), wrote 0 SLRU buffers; 0 WAL file(s) added, 0 removed, 0 recycled; write=0.503 s, sync=0.017 s, total=0.607 s; sync files=5, longest=0.005 s, average=0.004 s; distance=27 kB, estimate=4160 kB; lsn=0/38FE830, redo lsn=0/38FE7D8
+2026-10-06 13:31:47.264 IST [7029] LOG:  checkpoint starting: time
+2026-10-06 13:31:57.994 IST [7029] LOG:  checkpoint complete: wrote 105 buffers (0.6%), wrote 1 SLRU buffers; 0 WAL file(s) added, 0 removed, 0 recycled; write=10.535 s, sync=0.177 s, total=10.731 s; sync files=78, longest=0.005 s, average=0.003 s; distance=611 kB, estimate=3805 kB; lsn=0/39D59F0, redo lsn=0/3997588
+2026-10-06 13:35:49.043 IST [7470] ERROR:  insert or update on table "orders" violates foreign key constraint "orders_item_fkey"
+2026-10-06 13:35:49.043 IST [7470] DETAIL:  Key (item)=(Chese Maggi) is not present in table "menu".
+2026-10-06 13:35:49.043 IST [7470] STATEMENT:  INSERT INTO orders (wallet_id, item, amount, room) VALUES ('ME', 'Chese Maggi', 60, 'H-101');
+2026-10-06 13:36:03.642 IST [7470] ERROR:  current transaction is aborted, commands ignored until end of transaction block
+2026-10-06 13:36:03.642 IST [7470] STATEMENT:  SELECT balance FROM wallet WHERE wallet_id = 'ME';
+2026-10-06 13:36:17.676 IST [7470] ERROR:  syntax error at or near "←" at character 1
+2026-10-06 13:36:17.676 IST [7470] STATEMENT:  ← look at your prompt
+	
+	COMMIT;
+2026-10-06 13:36:40.394 IST [7470] ERROR:  current transaction is aborted, commands ignored until end of transaction block
+2026-10-06 13:36:40.394 IST [7470] STATEMENT:  SELECT balance FROM wallet WHERE wallet_id = 'ME';
+2026-10-06 13:36:48.094 IST [7029] LOG:  checkpoint starting: time
+2026-10-06 13:36:52.380 IST [7029] LOG:  checkpoint complete: wrote 42 buffers (0.3%), wrote 1 SLRU buffers; 0 WAL file(s) added, 0 removed, 0 recycled; write=4.214 s, sync=0.053 s, total=4.287 s; sync files=18, longest=0.005 s, average=0.003 s; distance=302 kB, estimate=3455 kB; lsn=0/39E3158, redo lsn=0/39E3100
+2026-10-06 14:07:22.351 IST [7470] WARNING:  there is already a transaction in progress
+2026-10-06 14:07:22.351 IST [7470] ERROR:  SET TRANSACTION ISOLATION LEVEL must be called before any query
+2026-10-06 14:07:22.351 IST [7470] STATEMENT:  BEGIN ISOLATION LEVEL READ UNCOMMITTED;
+2026-10-06 14:11:49.027 IST [7029] LOG:  checkpoint starting: time
+2026-10-06 14:12:02.798 IST [7029] LOG:  checkpoint complete: wrote 135 buffers (0.8%), wrote 1 SLRU buffers; 0 WAL file(s) added, 0 removed, 0 recycled; write=13.535 s, sync=0.221 s, total=13.772 s; sync files=82, longest=0.006 s, average=0.003 s; distance=840 kB, estimate=3194 kB; lsn=0/3AB5258, redo lsn=0/3AB51C8
+2026-10-06 14:16:49.898 IST [7029] LOG:  checkpoint starting: time
+2026-10-06 14:17:05.933 IST [7029] LOG:  checkpoint complete: wrote 159 buffers (1.0%), wrote 1 SLRU buffers; 0 WAL file(s) added, 0 removed, 0 recycled; write=15.942 s, sync=0.076 s, total=16.035 s; sync files=88, longest=0.005 s, average=0.001 s; distance=986 kB, estimate=2973 kB; lsn=0/3BABCE8, redo lsn=0/3BABC90
+2026-10-06 14:18:47.450 IST [7470] ERROR:  syntax error at or near "←" at character 1
+2026-10-06 14:18:47.450 IST [7470] STATEMENT:  ← call this X
+	SELECT count(*) FROM orders WHERE status = 'waiting';
+2026-10-06 14:21:50.025 IST [7029] LOG:  checkpoint starting: time
+2026-10-06 14:22:06.275 IST [7029] LOG:  checkpoint complete: wrote 159 buffers (1.0%), wrote 1 SLRU buffers; 0 WAL file(s) added, 0 removed, 0 recycled; write=15.944 s, sync=0.289 s, total=16.251 s; sync files=88, longest=0.078 s, average=0.004 s; distance=928 kB, estimate=2768 kB; lsn=0/3C93DD8, redo lsn=0/3C93D48
+2026-10-06 14:27:35.310 IST [7470] ERROR:  syntax error at or near "." at character 1
+2026-10-06 14:27:35.310 IST [7470] STATEMENT:  .
+	SELECT balance FROM wallet WHERE wallet_id = 'SHRUTI';
+2026-10-06 14:31:50.475 IST [7029] LOG:  checkpoint starting: time
+2026-10-06 14:32:08.210 IST [7029] LOG:  checkpoint complete: wrote 174 buffers (1.1%), wrote 1 SLRU buffers; 0 WAL file(s) added, 0 removed, 0 recycled; write=17.480 s, sync=0.235 s, total=17.735 s; sync files=134, longest=0.006 s, average=0.002 s; distance=1324 kB, estimate=2624 kB; lsn=0/3DDF060, redo lsn=0/3DDEFD0
+2026-10-06 15:17:12.473 IST [7470] ERROR:  insert or update on table "orders" violates foreign key constraint "orders_item_fkey"
+2026-10-06 15:17:12.473 IST [7470] DETAIL:  Key (item)=(Chese Maggi) is not present in table "menu".
+2026-10-06 15:17:12.473 IST [7470] STATEMENT:  INSERT INTO orders (wallet_id, item, amount, room) VALUES ('ME', 'Chese Maggi', 60, 'H-101');
+2026-10-06 15:17:22.341 IST [7470] ERROR:  current transaction is aborted, commands ignored until end of transaction block
+2026-10-06 15:17:22.341 IST [7470] STATEMENT:  SELECT balance FROM wallet WHERE wallet_id = 'ME';
+2026-10-06 15:20:59.478 IST [7029] LOG:  checkpoint starting: time
+2026-10-06 15:21:16.987 IST [7029] LOG:  checkpoint complete: wrote 173 buffers (1.1%), wrote 1 SLRU buffers; 0 WAL file(s) added, 0 removed, 0 recycled; write=17.343 s, sync=0.148 s, total=17.510 s; sync files=132, longest=0.007 s, average=0.002 s; distance=1251 kB, estimate=2487 kB; lsn=0/3F17C38, redo lsn=0/3F17BE0
+2026-10-06 16:01:00.681 IST [7029] LOG:  checkpoint starting: time
+2026-10-06 16:01:01.839 IST [7029] LOG:  checkpoint complete: wrote 11 buffers (0.1%), wrote 1 SLRU buffers; 0 WAL file(s) added, 0 removed, 0 recycled; write=1.108 s, sync=0.035 s, total=1.158 s; sync files=11, longest=0.005 s, average=0.004 s; distance=32 kB, estimate=2241 kB; lsn=0/3F1FCE0, redo lsn=0/3F1FC88
+2026-10-06 16:05:01.752 IST [7485] ERROR:  new row for relation "wallet" violates check constraint "wallet_balance_check"
+2026-10-06 16:05:01.752 IST [7485] DETAIL:  Failing row contains (ME, 25M0818, -2).
+2026-10-06 16:05:01.752 IST [7485] STATEMENT:  UPDATE wallet SET balance = balance - 60
+	WHERE wallet_id = 'ME'
+	RETURNING balance;
+2026-10-06 16:05:14.017 IST [7485] ERROR:  current transaction is aborted, commands ignored until end of transaction block
+2026-10-06 16:05:14.017 IST [7485] STATEMENT:  INSERT INTO orders (wallet_id, item, amount, room) VALUES ('ME', 'Cheese Maggi', 60, 'H-101');
+2026-10-06 16:06:00.935 IST [7029] LOG:  checkpoint starting: time
+2026-10-06 16:06:18.202 IST [7029] LOG:  checkpoint complete: wrote 145 buffers (0.9%), wrote 1 SLRU buffers; 0 WAL file(s) added, 0 removed, 1 recycled; write=16.841 s, sync=0.334 s, total=17.267 s; sync files=135, longest=0.007 s, average=0.003 s; distance=1089 kB, estimate=2126 kB; lsn=0/40C3568, redo lsn=0/4030480
+2026-10-06 16:11:00.209 IST [7029] LOG:  checkpoint starting: time
+2026-10-06 16:11:16.595 IST [7029] LOG:  checkpoint complete: wrote 161 buffers (1.0%), wrote 1 SLRU buffers; 0 WAL file(s) added, 0 removed, 0 recycled; write=16.138 s, sync=0.230 s, total=16.387 s; sync files=95, longest=0.005 s, average=0.003 s; distance=1222 kB, estimate=2035 kB; lsn=0/4161D40, redo lsn=0/4161CB0
+2026-10-06 16:14:06.604 IST [7470] WARNING:  there is no transaction in progress
+2026-10-06 16:14:32.958 IST [7485] WARNING:  there is no transaction in progress
+2026-10-06 16:16:00.695 IST [7029] LOG:  checkpoint starting: time
+2026-10-06 16:16:19.782 IST [7029] LOG:  checkpoint complete: wrote 188 buffers (1.1%), wrote 1 SLRU buffers; 0 WAL file(s) added, 0 removed, 0 recycled; write=18.883 s, sync=0.185 s, total=19.087 s; sync files=93, longest=0.005 s, average=0.002 s; distance=1091 kB, estimate=1941 kB; lsn=0/4273060, redo lsn=0/4272C00
+2026-10-06 16:21:00.881 IST [7029] LOG:  checkpoint starting: time
+2026-10-06 16:21:14.971 IST [7029] LOG:  checkpoint complete: wrote 140 buffers (0.9%), wrote 1 SLRU buffers; 0 WAL file(s) added, 0 removed, 0 recycled; write=14.037 s, sync=0.035 s, total=14.090 s; sync files=91, longest=0.005 s, average=0.001 s; distance=860 kB, estimate=1833 kB; lsn=0/4349E68, redo lsn=0/4349DD8
+2026-10-06 16:25:17.104 IST [7485] ERROR:  could not serialize access due to concurrent update
+2026-10-06 16:25:17.104 IST [7485] STATEMENT:  UPDATE wallet SET balance = 58 WHERE wallet_id = 'ME';
+2026-10-06 16:26:01.070 IST [7029] LOG:  checkpoint starting: time
+2026-10-06 16:26:14.542 IST [7029] LOG:  checkpoint complete: wrote 132 buffers (0.8%), wrote 1 SLRU buffers; 0 WAL file(s) added, 0 removed, 0 recycled; write=13.232 s, sync=0.223 s, total=13.472 s; sync files=88, longest=0.005 s, average=0.003 s; distance=844 kB, estimate=1734 kB; lsn=0/441CFA0, redo lsn=0/441CF48
+2026-10-06 16:26:23.580 IST [7485] WARNING:  there is no transaction in progress
+2026-10-06 16:31:01.641 IST [7029] LOG:  checkpoint starting: time
+2026-10-06 16:31:02.176 IST [7029] LOG:  checkpoint complete: wrote 5 buffers (0.0%), wrote 1 SLRU buffers; 0 WAL file(s) added, 0 removed, 0 recycled; write=0.503 s, sync=0.018 s, total=0.535 s; sync files=6, longest=0.004 s, average=0.003 s; distance=2 kB, estimate=1561 kB; lsn=0/441D838, redo lsn=0/441D7E0
+2026-10-06 16:54:53.428 IST [7485] ERROR:  new row for relation "wallet" violates check constraint "wallet_balance_check"
+2026-10-06 16:54:53.428 IST [7485] DETAIL:  Failing row contains (ME, 25M0818, -2).
+2026-10-06 16:54:53.428 IST [7485] STATEMENT:  UPDATE wallet SET balance = -2  WHERE wallet_id = 'ME';
+2026-10-06 16:56:01.675 IST [7029] LOG:  checkpoint starting: time
+2026-10-06 16:56:18.525 IST [7029] LOG:  checkpoint complete: wrote 137 buffers (0.8%), wrote 1 SLRU buffers; 0 WAL file(s) added, 0 removed, 0 recycled; write=16.239 s, sync=0.522 s, total=16.850 s; sync files=136, longest=0.082 s, average=0.004 s; distance=1005 kB, estimate=1505 kB; lsn=0/45B24F0, redo lsn=0/4518ED0
+2026-10-06 16:57:53.236 IST [7485] ERROR:  could not serialize access due to concurrent update
+2026-10-06 16:57:53.236 IST [7485] STATEMENT:  UPDATE wallet SET balance = 58  WHERE wallet_id = 'ME';
+2026-10-06 17:01:01.611 IST [7029] LOG:  checkpoint starting: time
+2026-10-06 17:01:19.473 IST [7029] LOG:  checkpoint complete: wrote 176 buffers (1.1%), wrote 1 SLRU buffers; 0 WAL file(s) added, 0 removed, 0 recycled; write=17.675 s, sync=0.168 s, total=17.863 s; sync files=93, longest=0.005 s, average=0.002 s; distance=1263 kB, estimate=1481 kB; lsn=0/4654BE8, redo lsn=0/4654B58
+2026-10-06 17:22:48.538 IST [7025] LOG:  received smart shutdown request
+2026-10-06 17:22:48.542 IST [7025] LOG:  background worker "logical replication launcher" (PID 7034) exited with exit code 1
+2026-10-06 17:22:48.542 IST [7029] LOG:  shutting down
+2026-10-06 17:22:48.548 IST [7029] LOG:  checkpoint starting: shutdown immediate
+2026-10-06 17:22:48.577 IST [7029] LOG:  checkpoint complete: wrote 0 buffers (0.0%), wrote 0 SLRU buffers; 0 WAL file(s) added, 0 removed, 0 recycled; write=0.001 s, sync=0.001 s, total=0.035 s; sync files=0, longest=0.000 s, average=0.000 s; distance=0 kB, estimate=1333 kB; lsn=0/4654C98, redo lsn=0/4654C98
+2026-10-06 17:22:48.597 IST [7025] LOG:  database system is shut down
+2026-10-07 11:15:25.225 IST [4192] LOG:  starting PostgreSQL 18.6 on x86_64-pc-linux-gnu, compiled by gcc (GCC) 15.2.1 20260123 (Red Hat 15.2.1-7), 64-bit
+2026-10-07 11:15:25.225 IST [4192] LOG:  listening on IPv6 address "::1", port 5432
+2026-10-07 11:15:25.225 IST [4192] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2026-10-07 11:15:25.229 IST [4192] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2026-10-07 11:15:25.240 IST [4198] LOG:  database system was shut down at 2026-10-06 17:22:48 IST
+2026-10-07 11:15:25.246 IST [4192] LOG:  database system is ready to accept connections
+2026-10-07 11:20:25.340 IST [4196] LOG:  checkpoint starting: time
+2026-10-07 11:20:41.030 IST [4196] LOG:  checkpoint complete: wrote 155 buffers (0.9%), wrote 3 SLRU buffers; 0 WAL file(s) added, 0 removed, 0 recycled; write=15.543 s, sync=0.059 s, total=15.691 s; sync files=95, longest=0.003 s, average=0.001 s; distance=942 kB, estimate=942 kB; lsn=0/4740860, redo lsn=0/47407D0
+2026-10-07 11:25:25.093 IST [4196] LOG:  checkpoint starting: time
+2026-10-07 11:25:38.905 IST [4196] LOG:  checkpoint complete: wrote 135 buffers (0.8%), wrote 1 SLRU buffers; 0 WAL file(s) added, 0 removed, 0 recycled; write=13.544 s, sync=0.172 s, total=13.813 s; sync files=90, longest=0.005 s, average=0.002 s; distance=828 kB, estimate=931 kB; lsn=0/480FBB8, redo lsn=0/480FB28
+2026-10-07 11:30:26.005 IST [4196] LOG:  checkpoint starting: time
+2026-10-07 11:30:41.562 IST [4196] LOG:  checkpoint complete: wrote 153 buffers (0.9%), wrote 1 SLRU buffers; 0 WAL file(s) added, 0 removed, 0 recycled; write=15.338 s, sync=0.200 s, total=15.558 s; sync files=94, longest=0.005 s, average=0.003 s; distance=931 kB, estimate=931 kB; lsn=0/48F8A78, redo lsn=0/48F89E8
+2026-10-07 11:40:26.709 IST [4196] LOG:  checkpoint starting: time
+2026-10-07 11:40:45.924 IST [4196] LOG:  checkpoint complete: wrote 189 buffers (1.2%), wrote 1 SLRU buffers; 0 WAL file(s) added, 0 removed, 0 recycled; write=18.953 s, sync=0.242 s, total=19.215 s; sync files=96, longest=0.005 s, average=0.003 s; distance=1049 kB, estimate=1049 kB; lsn=0/49FEEA8, redo lsn=0/49FEE18
+2026-10-07 11:43:11.597 IST [4576] ERROR:  could not serialize access due to read/write dependencies among transactions
+2026-10-07 11:43:11.597 IST [4576] DETAIL:  Reason code: Canceled on identification as a pivot, during commit attempt.
+2026-10-07 11:43:11.597 IST [4576] HINT:  The transaction might succeed if retried.
+2026-10-07 11:43:11.597 IST [4576] STATEMENT:  COMMIT;
+2026-10-07 11:43:31.185 IST [4576] WARNING:  there is no transaction in progress
+2026-10-07 11:45:26.932 IST [4196] LOG:  checkpoint starting: time
+2026-10-07 11:45:39.927 IST [4196] LOG:  checkpoint complete: wrote 128 buffers (0.8%), wrote 1 SLRU buffers; 0 WAL file(s) added, 0 removed, 0 recycled; write=12.837 s, sync=0.138 s, total=12.996 s; sync files=88, longest=0.005 s, average=0.002 s; distance=772 kB, estimate=1021 kB; lsn=0/4AC00D0, redo lsn=0/4AC0040
+2026-10-07 12:15:02.841 IST [4576] ERROR:  could not serialize access due to read/write dependencies among transactions
+2026-10-07 12:15:02.841 IST [4576] DETAIL:  Reason code: Canceled on identification as a pivot, during commit attempt.
+2026-10-07 12:15:02.841 IST [4576] HINT:  The transaction might succeed if retried.
+2026-10-07 12:15:02.841 IST [4576] STATEMENT:  COMMIT;
+2026-10-07 12:15:27.502 IST [4196] LOG:  checkpoint starting: time
+2026-10-07 12:15:41.814 IST [4196] LOG:  checkpoint complete: wrote 140 buffers (0.9%), wrote 1 SLRU buffers; 0 WAL file(s) added, 0 removed, 0 recycled; write=14.071 s, sync=0.222 s, total=14.312 s; sync files=90, longest=0.005 s, average=0.003 s; distance=870 kB, estimate=1006 kB; lsn=0/4B99AE0, redo lsn=0/4B99A50
+2026-10-07 13:28:36.341 IST [4196] LOG:  checkpoint starting: time
+2026-10-07 13:28:47.009 IST [4196] LOG:  checkpoint complete: wrote 104 buffers (0.6%), wrote 1 SLRU buffers; 0 WAL file(s) added, 0 removed, 0 recycled; write=10.431 s, sync=0.215 s, total=10.669 s; sync files=82, longest=0.005 s, average=0.003 s; distance=620 kB, estimate=967 kB; lsn=0/4C36D08, redo lsn=0/4C34B60
+2026-10-07 13:29:16.903 IST [4576] ERROR:  deadlock detected
+2026-10-07 13:29:16.903 IST [4576] DETAIL:  Process 4576 waits for ShareLock on transaction 35618; blocked by process 4549.
+	Process 4549 waits for ShareLock on transaction 35619; blocked by process 4576.
+	Process 4576: UPDATE wallet SET balance = balance + 50 WHERE wallet_id = 'SHRUTI';
+	Process 4549: UPDATE wallet SET balance = balance + 30 WHERE wallet_id = 'SAHIL';
+2026-10-07 13:29:16.903 IST [4576] HINT:  See server log for query details.
+2026-10-07 13:29:16.903 IST [4576] CONTEXT:  while updating tuple (0,2) in relation "wallet"
+2026-10-07 13:29:16.903 IST [4576] STATEMENT:  UPDATE wallet SET balance = balance + 50 WHERE wallet_id = 'SHRUTI';
+2026-10-07 13:33:36.055 IST [4196] LOG:  checkpoint starting: time
+2026-10-07 13:33:47.316 IST [4196] LOG:  checkpoint complete: wrote 110 buffers (0.7%), wrote 1 SLRU buffers; 0 WAL file(s) added, 0 removed, 0 recycled; write=11.036 s, sync=0.130 s, total=11.262 s; sync files=39, longest=0.005 s, average=0.004 s; distance=637 kB, estimate=934 kB; lsn=0/4CD4128, redo lsn=0/4CD4098
+2026-10-07 13:38:36.416 IST [4196] LOG:  checkpoint starting: time
+2026-10-07 13:38:52.795 IST [4196] LOG:  checkpoint complete: wrote 161 buffers (1.0%), wrote 1 SLRU buffers; 0 WAL file(s) added, 0 removed, 0 recycled; write=16.149 s, sync=0.136 s, total=16.380 s; sync files=92, longest=0.005 s, average=0.002 s; distance=877 kB, estimate=928 kB; lsn=0/4DAF6D0, redo lsn=0/4DAF640
+2026-10-07 13:43:36.895 IST [4196] LOG:  checkpoint starting: time
+2026-10-07 13:43:37.035 IST [4196] LOG:  checkpoint complete: wrote 1 buffers (0.0%), wrote 1 SLRU buffers; 0 WAL file(s) added, 0 removed, 0 recycled; write=0.101 s, sync=0.009 s, total=0.140 s; sync files=2, longest=0.005 s, average=0.005 s; distance=1 kB, estimate=836 kB; lsn=0/4DAFC18, redo lsn=0/4DAFBC0
+2026-10-07 14:13:36.596 IST [4196] LOG:  checkpoint starting: time
+2026-10-07 14:13:52.597 IST [4196] LOG:  checkpoint complete: wrote 158 buffers (1.0%), wrote 1 SLRU buffers; 0 WAL file(s) added, 0 removed, 0 recycled; write=15.843 s, sync=0.071 s, total=16.001 s; sync files=134, longest=0.005 s, average=0.001 s; distance=1163 kB, estimate=1163 kB; lsn=0/4F81298, redo lsn=0/4ED2A20
+2026-10-07 14:16:21.595 IST [4576] ERROR:  could not serialize access due to read/write dependencies among transactions
+2026-10-07 14:16:21.595 IST [4576] DETAIL:  Reason code: Canceled on identification as a pivot, during commit attempt.
+2026-10-07 14:16:21.595 IST [4576] HINT:  The transaction might succeed if retried.
+2026-10-07 14:16:21.595 IST [4576] STATEMENT:  COMMIT;
+2026-10-07 14:18:36.697 IST [4196] LOG:  checkpoint starting: time
+2026-10-07 14:18:54.092 IST [4196] LOG:  checkpoint complete: wrote 171 buffers (1.0%), wrote 1 SLRU buffers; 0 WAL file(s) added, 0 removed, 0 recycled; write=17.147 s, sync=0.231 s, total=17.396 s; sync files=96, longest=0.005 s, average=0.003 s; distance=1040 kB, estimate=1151 kB; lsn=0/4FD6DB0, redo lsn=0/4FD6D20
+2026-10-07 14:20:00.782 IST [4576] ERROR:  duplicate key value violates unique constraint "one_wing_per_day"
+2026-10-07 14:20:00.782 IST [4576] DETAIL:  Key (match_day)=(2026-10-04) already exists.
+2026-10-07 14:20:00.782 IST [4576] STATEMENT:  INSERT INTO tv_booking (wing, match_day)
+	SELECT 'B-wing', DATE '2026-10-04'
+	WHERE NOT EXISTS (
+	    SELECT 1 FROM tv_booking
+	    WHERE match_day = DATE '2026-10-04'
+	)
+	RETURNING wing, match_day;
+2026-10-07 14:22:36.832 IST [4549] ERROR:  duplicate key value violates unique constraint "one_wing_per_day"
+2026-10-07 14:22:36.832 IST [4549] DETAIL:  Key (match_day)=(2026-10-04) already exists.
+2026-10-07 14:22:36.832 IST [4549] STATEMENT:  INSERT INTO tv_booking (wing, match_day)
+	SELECT 'A-wing', DATE '2026-10-04'
+	WHERE NOT EXISTS (
+	    SELECT 1 FROM tv_booking
+	    WHERE match_day = DATE '2026-10-04'
+	)
+	RETURNING wing, match_day;
+2026-10-07 14:23:36.192 IST [4196] LOG:  checkpoint starting: time
+2026-10-07 14:23:56.506 IST [4196] LOG:  checkpoint complete: wrote 201 buffers (1.2%), wrote 1 SLRU buffers; 0 WAL file(s) added, 0 removed, 1 recycled; write=20.147 s, sync=0.145 s, total=20.315 s; sync files=181, longest=0.008 s, average=0.001 s; distance=1676 kB, estimate=1676 kB; lsn=0/517C058, redo lsn=0/5179FE8
+2026-10-07 15:13:37.385 IST [4196] LOG:  checkpoint starting: time
+2026-10-07 15:13:51.459 IST [4196] LOG:  checkpoint complete: wrote 138 buffers (0.8%), wrote 3 SLRU buffers; 0 WAL file(s) added, 0 removed, 0 recycled; write=13.845 s, sync=0.212 s, total=14.074 s; sync files=89, longest=0.005 s, average=0.003 s; distance=866 kB, estimate=1595 kB; lsn=0/52529A0, redo lsn=0/5252910
+2026-10-07 15:18:37.559 IST [4196] LOG:  checkpoint starting: time
+2026-10-07 15:18:54.741 IST [4196] LOG:  checkpoint complete: wrote 169 buffers (1.0%), wrote 3 SLRU buffers; 0 WAL file(s) added, 0 removed, 0 recycled; write=16.944 s, sync=0.221 s, total=17.183 s; sync files=136, longest=0.005 s, average=0.002 s; distance=1254 kB, estimate=1561 kB; lsn=0/540A948, redo lsn=0/538C4F0
+2026-10-07 15:19:34.622 IST [4576] ERROR:  could not serialize access due to read/write dependencies among transactions
+2026-10-07 15:19:34.622 IST [4576] DETAIL:  Reason code: Canceled on identification as a pivot, during commit attempt.
+2026-10-07 15:19:34.622 IST [4576] HINT:  The transaction might succeed if retried.
+2026-10-07 15:19:34.622 IST [4576] STATEMENT:  COMMIT;
+2026-10-07 15:19:54.740 IST [4576] WARNING:  there is no transaction in progress
+2026-10-07 15:20:11.010 IST [4576] ERROR:  syntax error at or near "INSERT" at character 36
+2026-10-07 15:20:11.010 IST [4576] STATEMENT:  BEGIN ISOLATION LEVEL SERIALIZABLE
+	INSERT INTO delivery_slip (order_id, runner)
+	SELECT o.order_id, 'Golu'
+	FROM orders AS o
+	WHERE o.status = 'waiting'
+	  AND NOT EXISTS (
+	      SELECT 1 FROM delivery_slip AS d
+	      WHERE d.order_id = o.order_id
+	  )
+	ORDER BY o.order_id
+	LIMIT 1
+	RETURNING order_id, runner;
+2026-10-07 15:20:36.581 IST [4576] WARNING:  there is no transaction in progress
+2026-10-07 15:21:53.208 IST [14884] ERROR:  could not serialize access due to read/write dependencies among transactions
+2026-10-07 15:21:53.208 IST [14884] DETAIL:  Reason code: Canceled on identification as a pivot, during commit attempt.
+2026-10-07 15:21:53.208 IST [14884] HINT:  The transaction might succeed if retried.
+2026-10-07 15:21:53.208 IST [14884] STATEMENT:  COMMIT;
+2026-10-07 15:21:56.911 IST [14884] WARNING:  there is no transaction in progress
+2026-10-07 15:23:37.819 IST [4196] LOG:  checkpoint starting: time
+2026-10-07 15:23:55.611 IST [4196] LOG:  checkpoint complete: wrote 176 buffers (1.1%), wrote 3 SLRU buffers; 0 WAL file(s) added, 0 removed, 0 recycled; write=17.647 s, sync=0.125 s, total=17.793 s; sync files=98, longest=0.005 s, average=0.002 s; distance=1044 kB, estimate=1509 kB; lsn=0/54916E8, redo lsn=0/5491658
+2026-10-07 15:28:37.711 IST [4196] LOG:  checkpoint starting: time
+2026-10-07 15:28:55.332 IST [4196] LOG:  checkpoint complete: wrote 173 buffers (1.1%), wrote 1 SLRU buffers; 0 WAL file(s) added, 0 removed, 0 recycled; write=17.345 s, sync=0.259 s, total=17.621 s; sync files=139, longest=0.005 s, average=0.002 s; distance=1328 kB, estimate=1491 kB; lsn=0/562AC78, redo lsn=0/55DDA20
+2026-10-07 16:28:29.707 IST [4192] LOG:  received smart shutdown request
+2026-10-07 16:28:29.710 IST [4192] LOG:  background worker "logical replication launcher" (PID 4201) exited with exit code 1
+2026-10-07 16:28:29.710 IST [4196] LOG:  shutting down
+2026-10-07 16:28:29.714 IST [4196] LOG:  checkpoint starting: shutdown immediate
+2026-10-07 16:28:29.789 IST [4196] LOG:  checkpoint complete: wrote 47 buffers (0.3%), wrote 1 SLRU buffers; 0 WAL file(s) added, 0 removed, 0 recycled; write=0.003 s, sync=0.049 s, total=0.079 s; sync files=10, longest=0.010 s, average=0.005 s; distance=308 kB, estimate=1373 kB; lsn=0/562AD28, redo lsn=0/562AD28
+2026-10-07 16:28:29.803 IST [4192] LOG:  database system is shut down
